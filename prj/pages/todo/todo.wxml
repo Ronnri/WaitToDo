@@ -1,0 +1,7 @@
+<!--pages/todo/todo.wxml-->
+<import src="../../template/nav" />
+<view class="flex fix_nav_wp">
+  <block wx:for="{{navData}}">
+      <template is="nav" data="{{...item}}"/>
+  </block>
+</view> 
