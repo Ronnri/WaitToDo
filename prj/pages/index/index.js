@@ -19,7 +19,7 @@ Page({
   //跳转主页的button
   clickMe: function() {
     wx.navigateTo({
-      url: '../detail/detail'
+      url: '../todo/todo'
     })
   },
 
