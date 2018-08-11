@@ -4,7 +4,7 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
+    motto: 'Have Something Wait To Do ?',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
@@ -15,6 +15,14 @@ Page({
       url: '../logs/logs'
     })
   },
+
+  //跳转主页的button
+  clickMe: function() {
+    wx.navigateTo({
+      url: '../detail/detail'
+    })
+  },
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({

@@ -17,5 +17,19 @@
 }
 
 .usermotto {
-  margin-top: 200px;
+  margin-top: 100px;
+  font-family: Viner Hand ITC;
 }
+
+button.bg-danger {
+  border: none;
+  color: white;
+  font-family:Arial;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 80%;
+  font-size: 14px;
+  margin: 100px auto 0px auto; 
+  background-color: #4285f4 !important;
+   }
