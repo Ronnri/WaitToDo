@@ -34,6 +34,62 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+  },
+  navData:{
+    nav_todo: [
+      {
+        name: "待做",  //文本
+        current: 1,    //是否是当前页，0不是  1是
+        ico: 'icon-bijiben',  //不同图标
+        fn: 'gotoToDo'   //对应处理函数
+      }, {
+        name: "日程",
+        current: 0,
+        ico: 'icon-shufa',
+        fn: 'gotoSchedule'
+      }, {
+        name: "设置",
+        current: 0,
+        ico: 'icon-wenju',
+        fn: 'gotoSettings'
+      }
+    ],
+    nav_schedule: [
+      {
+        name: "待做",  //文本
+        current: 0,    //是否是当前页，0不是  1是
+        ico: 'icon-bijiben',  //不同图标
+        fn: 'gotoToDo'   //对应处理函数
+      }, {
+        name: "日程",
+        current: 1,
+        ico: 'icon-shufa',
+        fn: 'gotoSchedule'
+      }, {
+        name: "设置",
+        current: 0,
+        ico: 'icon-wenju',
+        fn: 'gotoSettings'
+      }
+    ],
+    nav_settings: [
+      {
+        name: "待做",  //文本
+        current: 0,    //是否是当前页，0不是  1是
+        ico: 'icon-bijiben',  //不同图标
+        fn: 'gotoToDo'   //对应处理函数
+      }, {
+        name: "日程",
+        current: 0,
+        ico: 'icon-shufa',
+        fn: 'gotoSchedule'
+      }, {
+        name: "设置",
+        current: 1,
+        ico: 'icon-wenju',
+        fn: 'gotoSettings'
+      }
+    ]
   }
 })

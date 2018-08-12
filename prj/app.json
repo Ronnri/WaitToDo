@@ -3,9 +3,7 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/result/result",
-    "pages/schedule/schedule",
-    "pages/todo/todo",
-    "pages/settings/settings"
+    "pages/todo/todo"
   ],
   "window": {
     "backgroundTextStyle": "light",

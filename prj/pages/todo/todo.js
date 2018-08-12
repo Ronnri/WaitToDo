@@ -1,28 +1,14 @@
 // pages/todo/todo.js
+
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    navData: [
-      {
-        name: "待做",  //文本
-        current: 1,    //是否是当前页，0不是  1是
-        ico: 'icon-bijiben',  //不同图标
-        fn: 'gotoToDo'   //对应处理函数
-      }, {
-        name: "日程",
-        current: 0,
-        ico: 'icon-shufa',
-        fn: 'gotoSchedule'
-      }, {
-        name: "设置",
-        current: 0,
-        ico: 'icon-wenju',
-        fn: 'gotoSettings'
-      }
-    ],
+    list: "to do list here",
+    navData: app.navData.nav_todo,
   },
 
   /**
@@ -80,14 +66,24 @@ Page({
   onShareAppMessage: function () {
   
   },
+
+
   gotoSchedule: function () {
-    wx.navigateTo({
-      url: '../schedule/schedule',
+    this.setData({
+      list:"schedule list here",
+      navData: app.navData.nav_schedule,
     })
   },
   gotoSettings: function () {
-    wx.navigateTo({
-      url: '../settings/settings',
+    this.setData({
+      list: "settings here",
+      navData: app.navData.nav_settings,
+    })
+  },
+  gotoToDo: function () {
+    this.setData({
+      list: "to do list here",
+      navData: app.navData.nav_todo,
     })
   }
 })
