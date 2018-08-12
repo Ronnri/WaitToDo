@@ -1,10 +1,21 @@
 <!--pages/todo/todo.wxml-->
 <import src="../../template/nav" />
+<import src="../../template/card" />
 
 
+<view class="todo-container " >
 
-<view class="container">
-  <text>{{list}}</text>
+<scroll-view  class = "scroll-style" scroll-y="true" bindscroll="scrollFun" >
+  <!-- card list -->
+    <view class="card" wx:for="{{cardData}}">
+      <template is="card" data="{{...item}}"/>
+    </view>
+ </scroll-view >
+
+<view>
+<image style='position:fixed; width:50rpx;height:50rpx' mode="aspectFill" src="/imgs/addButton.png"/>
+</view>
+  <!-- tab bar -->
   <view class="flex fix_nav_wp">
     <block wx:for="{{navData}}">
         <template is="nav" data="{{...item}}"/>

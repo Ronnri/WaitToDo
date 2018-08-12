@@ -9,13 +9,53 @@ Page({
   data: {
     list: "to do list here",
     navData: app.navData.nav_todo,
+    cardData:[
+      {
+        title:"ttt",
+        time:"2018-7-28",
+        img:'1.png',
+        onItemClick:''
+      },
+      {
+        title: "ttt1",
+        time: "tttime1",
+        img: '2.png',
+        onItemClick: ''
+      },
+      {
+        title: "ttt2",
+        time: "tttime2",
+        img: '3.png',
+        onItemClick: ''
+      },
+      {
+        title: "ttt",
+        time: "2018-7-28",
+        img: '1.png',
+        onItemClick: ''
+      },
+      {
+        title: "ttt1",
+        time: "tttime1",
+        img: '2.png',
+        onItemClick: ''
+      },
+      {
+        title: "ttt2",
+        time: "tttime2",
+        img: '3.png',
+        onItemClick: ''
+      }
+    ]
   },
 
+  scrollFun: function() {
+
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
   },
 
   /**
@@ -52,7 +92,6 @@ Page({
   onPullDownRefresh: function () {
   
   },
-
   /**
    * 页面上拉触底事件的处理函数
    */

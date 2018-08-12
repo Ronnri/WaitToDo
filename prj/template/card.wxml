@@ -1,0 +1,8 @@
+
+<template name="card">
+    <view bindtap="{{onItemClick}}">
+      <image class="image" mode="aspectFill" src="/imgs/{{img}}"/>
+      <text class="time">{{time}}</text>
+      <text class="title">{{title}}</text>
+    </view>
+</template>
