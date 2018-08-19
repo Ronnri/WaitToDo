@@ -1,7 +1,7 @@
 <!--pages/todo/todo.wxml-->
 <import src="../../template/nav" />
 <import src="../../template/card" />
-
+<import src="../../template/modal" />
 
 <view class="todo-container " >
 
@@ -12,9 +12,10 @@
     </view>
  </scroll-view >
 
-<view>
-<image style='position:fixed; width:50rpx;height:50rpx' mode="aspectFill" src="/imgs/addButton.png"/>
-</view>
+ <view class='addButton' bindtap="addToDo">
+  <icon class="iconfont icon-addition_fill"></icon>
+ </view>
+
   <!-- tab bar -->
   <view class="flex fix_nav_wp">
     <block wx:for="{{navData}}">
@@ -22,3 +23,88 @@
     </block>
   </view> 
 </view>
+
+<!-- 模态框 modal -->
+<view class="modal {{showAmountModal.showModal}}">
+    <form bindsubmit="widthdraws">
+      <view class="modal-content">
+
+        <view class="modal-line-box amount-title side-bord">
+          <text>添加你的待做</text>
+        </view>
+
+        <view class="modal-line-box amount-info side-bord">
+        <text>事项名称</text>
+          <input name="title" class="{{whatIsTitleBord}}" bindinput="inputTitle" value="{{title}}" placeholder="事项名称" />
+        </view>
+
+        <view class="modal-line-box amount-info side-bord">
+        <text>事项简要说明</text>
+          <input name="content" class="{{whatIsContentBord}}" bindinput="inputContent" value="{{content}}" placeholder="事项简要说明" />
+        </view>
+
+        <view class="modal-line-box side-bord amount-info">
+          <text>重复方式</text>
+          <picker mode="selector"
+          value="{{repeatType}}"
+          range="{{repeatTypeRange}}
+          bindchange="changeRepeatType"
+          >
+            <view class="picker-detail">
+               {{repeatTypeRange[repeatType]}}
+            </view>
+           </picker>
+        </view>
+      
+    <!-- <view  wx:if="{{repeatType == 0}}" class="modal-line-box side-bord">
+           <picker mode="multiSelector" 
+           value="{{dateTime}}" 
+           bindchange="changeDateTime" 
+           bindcolumnchange="changeDateTimeColumn" 
+           changeDateTime="changeDateTime"
+           range="{{dateTimeArrayRange}}">
+            <view class="picker-detail">
+              选择日期时间: {{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}
+            </view>
+          </picker>
+        </view> -->
+        <view class="modal-line-box side-bord amount-info">
+            <text>选择时间</text>
+          <picker mode="time" value="{{time}}" start="{{startTime}}" end="{{endTime}}" bindchange="bindTimeChange">
+            <view class="picker-detail">
+              {{time}}
+            </view>
+          </picker>
+        </view>
+
+        <view  wx:if="{{repeatType == 0}}" class="modal-line-box side-bord amount-info">
+          <text>选择日期</text>
+        <picker 
+        mode="date" 
+        value="{{date}}" 
+        start="{{startDate}}" 
+        end="{{endDate}}" 
+        bindchange="bindDateChange">
+          <view class="picker-detail">
+            {{date}}
+          </view>
+        </picker>
+        </view>
+        <view wx:if="{{repeatType == 2}}" class="modal-line-box side-bord amount-checkbox">  
+          <text>重复时间</text>
+          <checkbox-group bindchange="checkboxChange">
+            <label class="checkbox" wx:for="{{repeatRule.noRepeat}}">
+              <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+            </label>
+          </checkbox-group> 
+        </view>
+
+        <view class="modal-line-box amount-info">
+          <button bindtap="submit" size="mini" class="bg-success">确定</button>
+          <button bindtap="hideAmountModal" size="mini" class="bg-cancle">取消</button>
+        </view>
+
+      </view>
+      </form>
+    </view>
+      <view class="mask {{showAmountModal.showMask}}"></view>
