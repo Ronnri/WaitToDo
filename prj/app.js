@@ -15,7 +15,6 @@ App({
     // 获取用户信息
     wx.getSetting({
       success: res => {
-        console.log(res);
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
@@ -38,6 +37,10 @@ App({
     userInfo: null,
   },
   navData:{
+    navFlags:{
+      nav_flag_todo: "todo",
+      nav_flag_finished: "finished",
+    },
     nav_todo: [
       {
         name: "待做",  //文本
@@ -45,10 +48,10 @@ App({
         ico: 'icon-bijiben',  //不同图标
         fn: 'gotoToDo'   //对应处理函数
       }, {
-        name: "日程",
+        name: "已完成",
         current: 0,
         ico: 'icon-shufa',
-        fn: 'gotoSchedule'
+        fn: 'gotoFinished'
       }, {
         name: "设置",
         current: 0,
@@ -56,17 +59,17 @@ App({
         fn: 'gotoSettings'
       }
     ],
-    nav_schedule: [
+    nav_finished: [
       {
         name: "待做",  //文本
-        current: 0,    //是否是当前页，0不是  1是
+        current: 0,    //是否是当前页，0不是  1是,用于图标上色
         ico: 'icon-bijiben',  //不同图标
         fn: 'gotoToDo'   //对应处理函数
       }, {
-        name: "日程",
+        name: "已完成",
         current: 1,
         ico: 'icon-shufa',
-        fn: 'gotoSchedule'
+        fn: 'gotoFinished'
       }, {
         name: "设置",
         current: 0,
@@ -81,10 +84,10 @@ App({
         ico: 'icon-bijiben',  //不同图标
         fn: 'gotoToDo'   //对应处理函数
       }, {
-        name: "日程",
+        name: "已完成",
         current: 0,
         ico: 'icon-shufa',
-        fn: 'gotoSchedule'
+        fn: 'gotoFinished'
       }, {
         name: "设置",
         current: 1,

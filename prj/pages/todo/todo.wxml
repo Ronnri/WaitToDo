@@ -5,14 +5,15 @@
 
 <view class="todo-container " >
 
-<scroll-view  class = "scroll-style" scroll-y="true" bindscroll="scrollFun" >
+<scroll-view  class = "scroll-style" scroll-y="true" 
+bindscrolltolower='scrollToLowerRefresh' bindscrolltoupper='scrollToTopRefresh' lower-threshold='10' upper-threshold='0'>
   <!-- card list -->
     <view class="card" wx:for="{{cardData}}">
       <template is="card" data="{{...item}}"/>
     </view>
  </scroll-view >
 
- <view class='addButton' bindtap="addToDo">
+ <view wx:if="{{nav_flag == navFlags.nav_flag_todo}}" class='addButton' bindtap="addToDo">
   <icon class="iconfont icon-addition_fill"></icon>
  </view>
 

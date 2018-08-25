@@ -2,6 +2,7 @@
 
 
 const app = getApp();
+const util = require('../../utils/util.js');
 const dateTimePicker = require('../../utils/dateTimePicker.js');
 
 Page({
@@ -10,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loadingData:false,   //是否需要显示加载数据的图标
     startTime:"00:00",
     endTime:"23:59",
     repeatTypeRange:[
@@ -19,6 +21,8 @@ Page({
       // "a mouth",
       // "a year",
     ],
+    navFlags: app.navData.navFlags,
+    nav_flag: app.navData.navFlags.nav_flag_todo,
     repeatRule:{
       // 按周重复的选择
       noRepeat:[
@@ -35,55 +39,39 @@ Page({
       showModal: 'hideModal',
       showMask: 'hideMask',
     },
-    list: "to do list here",
     navData: app.navData.nav_todo,
-    cardData:[
-      {
-        title:"ttt",
-        time:"2018-7-28",
-        img:'1.png',
-        onItemClick:''
-      },
-      {
-        title: "ttt1",
-        time: "tttime1",
-        img: '2.png',
-        onItemClick: ''
-      },
-      {
-        title: "ttt2",
-        time: "tttime2",
-        img: '3.png',
-        onItemClick: ''
-      },
-      {
-        title: "ttt",
-        time: "2018-7-28",
-        img: '1.png',
-        onItemClick: ''
-      },
-      {
-        title: "ttt1",
-        time: "tttime1",
-        img: '2.png',
-        onItemClick: ''
-      },
-      {
-        title: "ttt2",
-        time: "tttime2",
-        img: '3.png',
-        onItemClick: ''
-      }
-    ]
+    cardData:[]
   },
 
-  scrollFun: function() {
 
-  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this;
+    this.setData({ "usr": app.globalData.userInfo.nickName});
+    wx.request({
+      url: 'https://www.bennkyou.top/TodoServer/getInfor',
+      method: "POST",
+      data: {
+        usr: this.data.usr,
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        if (res.statusCode == "200") {
+          that.setData({cardData: util.cardData(res.data)});
+        } else {
+          wx.showToast({
+            title: '系统繁忙，稍后再试',
+            icon: 'none',
+            duration: 1000,
+            mask: true
+          })
+        }
+      }
+    })
   },
 
   /**
@@ -118,8 +106,74 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
   },
+  /**
+   * 下拉刷新
+   */
+  scrollToTopRefresh: function () {
+    wx.showToast({
+      title: '触顶了...',
+      icon: 'none',
+      duration: 1000,
+      mask: true
+    })
+  },
+  /** 
+  * 上滑加载更多 
+  */
+  scrollToLowerRefresh: function () {
+    let loadingData = this.data.loadingData,
+    that = this;
+    // 防止同一时间多次触发
+    if (loadingData) {
+      return;
+    }
+    this.setData({
+      loadingData: true
+    });
+    wx.showLoading({
+      title: '数据加载中...',
+    });
+    // 定时制造停顿感
+    setTimeout(function () {  
+      that.loadData( (flag) => {
+        that.setData({
+          loadingData: false
+        });
+        wx.hideLoading();
+        if(flag){
+        }else{
+          wx.showToast({
+            title: '数据加载失败',
+            icon: 'none',
+            duration: 1000,
+            mask: true
+          })
+        }
+      });},1000);
+  },  
+
+  loadData: function(callback){
+    wx.request({
+      url: 'https://www.bennkyou.top/TodoServer/getInfor',
+      method: "POST",
+      data: {
+        usr: this.data.usr,
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        if (res.statusCode == "200") {
+          console.log("get success!", res.data);
+          callback(true);
+        } else {
+          callback(false);
+        }
+      }
+    })
+  },
+
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -203,8 +257,7 @@ Page({
  * 提交新的待做
  */
   submit: function(){
-
-    if (this.data.title == null || this.data.title == "" || this.data.content == null || this.data.content == ""){
+    if (this.data.title == null || this.data.title == "" || this.data.content == null ||      this.data.content == ""){
       if (this.data.title == null || this.data.title == "") {
         this.setData({ whatIsTitleBord: "has-bord-danger", });
       }else{
@@ -250,25 +303,18 @@ Page({
         duration: 1000,
         mask: true
       });return;
-
    };
-    let sdf={
-      usr: 'xu da pang',
-      title: this.data.title,
-      content: this.data.content,
-      backimg: "",
-      repeat_type: rType,
-      event_time: eventTime,
-  };
-    console.log("rulala", sdf);
+    let backImg = dateTimePicker.getImgName(this.data.time);
+    
+var that = this;
     wx.request({
       url: 'https://www.bennkyou.top/TodoServer/addInfor',
       method: "POST",
       data: {
-        usr: 'xu da pang',
+        usr: this.data.usr,
         title: this.data.title,
         content: this.data.content,
-        backimg:"",
+        backimg: backImg,
         repeat_type: rType,
         event_time: eventTime,
       },
@@ -278,6 +324,9 @@ Page({
       success: function (res) {
         if(res.statusCode == "200"){
           console.log("add success!", res.data);
+          that.setData({
+            cardData: util.unshiftCardData(that.data.cardData,that.data.title, eventTime,backImg)
+          });
           wx.showToast({
             title: '成功',
             icon: 'succes',
@@ -361,10 +410,10 @@ Page({
 /**
  * 页面局部切换
  */
-  gotoSchedule: function () {
+  gotoFinished: function () {
     this.setData({
-      list:"schedule list here",
-      navData: app.navData.nav_schedule,
+      nav_flag: this.data.navFlags.nav_flag_finished,
+      navData: app.navData.nav_finished,
     })
   },
   /**
@@ -381,8 +430,8 @@ Page({
  */
   gotoToDo: function () {
     this.setData({
-      list: "to do list here",
+      nav_flag: this.data.navFlags.nav_flag_todo,
       navData: app.navData.nav_todo,
     })
-  }
+  },
 })

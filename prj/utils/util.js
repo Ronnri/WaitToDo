@@ -13,7 +13,37 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
+/**
+ * 将服务器放回的双重数组变为jsonArr
+ */
+const cardData = data => {
+  let formatData = [];
+  for(let i = 0; i<data.length;i++){
+    formatData.push({
+      title: data[i][1],
+      time: data[i][7],
+      img: data[i][3],
+      onItemClick:'itemOnClick'
+    });
+  }
+  return formatData;
+}
+/**
+ * 在数组前面添加数据
+ */
+const unshiftCardData = (cardData,title,time,img) =>{
+  let formatData = cardData;
+  formatData.unshift({
+    title: title,
+    time: time,
+    img: img,
+    onItemClick: 'itemOnClick'
+  });
+  return formatData;
+}
 
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  cardData: cardData,
+  unshiftCardData: unshiftCardData
 }

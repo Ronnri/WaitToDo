@@ -11,7 +11,7 @@
     <text class="user-motto">{{motto}}</text>
   </view>
 
-<button bindtap="clickMe" class="bg-danger">
+<button disabled="{{!hasUserInfo && canIUse}}" bindtap="clickMe" class="bg-danger">
   Let's Go!
 </button>
 </view>

@@ -23,6 +23,16 @@ function getMyTime() {
   return hour + ":" + minute;
 }
 
+function getImgName(time){
+  console.log("time",time);
+  if(time < "12:00"){
+    return "morning.jpg";
+  }else if(time < "18:00"){
+    return "afternoon.jpg";
+  }
+  return "evening.jpg";
+}
+
 
 function withData(param) {
   return param < 10 ? '0' + param : '' + param;
@@ -103,6 +113,7 @@ function dateTimePicker(startYear, endYear, date) {
 module.exports = {
   dateTimePicker: dateTimePicker,
   getMonthDay: getMonthDay,
-    getMyDay:getMyDay,
-  getMyTime:getMyTime,
+  getMyDay: getMyDay,
+  getMyTime: getMyTime,
+  getImgName: getImgName
 }
